@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Entreprise;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class EntrepriseSeeder extends Seeder
@@ -12,6 +13,14 @@ class EntrepriseSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $entreprisesUsers = User::where('role', 'entreprise')->get();
+
+        foreach ($entreprisesUsers as $user) {
+
+            Entreprise::factory()->create([
+                'user_id' => $user->id,
+            ]);
+
+        }
     }
 }
