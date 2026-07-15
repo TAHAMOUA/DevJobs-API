@@ -13,8 +13,13 @@ class Competence extends Model
         'nom',
     ];
 
-    public function offres()
-    {
-        return $this->belongsToMany(Offre::class);
-    }
+   public function offres()
+{
+    return $this->belongsToMany(
+        Offre::class,
+        'offre_competence',
+        'competence_id',
+        'offre_id'
+    );
+}
 }

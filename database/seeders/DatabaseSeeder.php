@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             CompetenceSeeder::class,
             OffreSeeder::class,
             CandidatureSeeder::class,
+            OffreCompetenceSeeder::class,
         ]);
     }
 }
