@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Entreprise;
+use App\Models\Offre;
 use Illuminate\Database\Seeder;
 
 class OffreSeeder extends Seeder
@@ -12,6 +13,14 @@ class OffreSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $entreprises = Entreprise::all();
+
+        foreach ($entreprises as $entreprise) {
+
+            Offre::factory()->count(3)->create([
+                'entreprise_id' => $entreprise->id,
+            ]);
+
+        }
     }
 }

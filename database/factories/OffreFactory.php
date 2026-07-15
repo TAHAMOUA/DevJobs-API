@@ -2,11 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Entreprise;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OffreFactory extends Factory
 {
+    /**
+     * Define the model's default state.
+     */
     public function definition(): array
     {
         return [
@@ -16,9 +18,8 @@ class OffreFactory extends Factory
                 'CDI',
                 'CDD',
                 'Stage',
-                'Freelance'
+                'Freelance',
             ]),
-            'entreprise_id' => Entreprise::factory(),
         ];
     }
 }
