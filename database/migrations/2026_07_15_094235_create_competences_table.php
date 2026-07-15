@@ -20,6 +20,7 @@ return new class extends Migration
             ])->default('En attente');
             $table->foreignId('uesr_id')->constrained()->onDelete('cascade');
             $table->foreignId('offer_id')->constrained()->onDelete('cascade');
+            $table->unique(['user_id', 'offre_id']);
             $table->timestamps();
         });
     }
