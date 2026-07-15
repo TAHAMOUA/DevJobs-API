@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('competences', function (Blueprint $table) {
             $table->id();
+            $table->string('statut',[
+                'En attente',
+                'Acceptee',
+                'Refusee'
+            ])->default('En attente');
+            $table->foreignId('uesr_id')->constrained()->onDelete('cascade');
+            $table->foreignId('offer_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
