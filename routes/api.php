@@ -20,3 +20,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 });
 
+Route::middleware(['auth:sanctum', 'admin'])->get('/admin-test', function () {
+    return response()->json([
+        'message' => 'Welcome Admin'
+    ]);
+});
