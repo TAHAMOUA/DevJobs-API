@@ -2,6 +2,8 @@
 use App\Http\Controllers\Api\EntrepriseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\OffreController;
+
 Route::get('/test', function () {
     return response()->json([
         'message' => 'API DevJobs works!'
@@ -33,5 +35,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/entreprises/{me}', [EntrepriseController::class, 'show']);
 
     Route::put('/entreprises/{me}', [EntrepriseController::class, 'update']);
+
+});
+
+Route::middleware(['auth:sanctum', 'entreprise'])->group(function () {
+
+    Route::get('/offres', [OffreController::class, 'index']);
+
+    Route::post('/offres', [OffreController::class, 'store']);
+
+    Route::get('/offres/{offre}', [OffreController::class, 'show']);
+
+    Route::put('/offres/{offre}', [OffreController::class, 'update']);
+
+    Route::delete('/offres/{offre}', [OffreController::class, 'destroy']);
 
 });

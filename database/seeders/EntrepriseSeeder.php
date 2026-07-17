@@ -14,7 +14,9 @@ class EntrepriseSeeder extends Seeder
     public function run(): void
     {
         $entreprisesUsers = User::where('role', 'entreprise')->get();
-
+// $entreprisesUsers = User::where('role', 'entreprise')
+//     ->take(4)
+//     ->get();
         foreach ($entreprisesUsers as $user) {
 
             Entreprise::factory()->create([

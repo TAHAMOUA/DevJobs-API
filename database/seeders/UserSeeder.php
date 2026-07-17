@@ -21,17 +21,21 @@ class UserSeeder extends Seeder
         ]);
 
         // Entreprises
-        User::factory()
-            ->count(5)
-            ->create([
-                'role' => 'entreprise',
-            ]);
+       User::factory()->create([
+    'prenom' => 'Google',
+    'nom' => 'Company',
+    'email' => 'entreprise@devjobs.com',
+    'password' => bcrypt('password'),
+    'role' => 'entreprise',
+]);
 
         // Candidats
-        User::factory()
-            ->count(20)
-            ->create([
-                'role' => 'candidat',
-            ]);
+       User::factory()->create([
+    'prenom' => 'Taha',
+    'nom' => 'Mouaddine',
+    'email' => 'candidat@devjobs.com',
+    'password' => bcrypt('password'),
+    'role' => 'candidat',
+]);
     }
 }
