@@ -10,12 +10,6 @@ class EntrepriseFactory extends Factory
     {
         return [
             'nom' => fake()->company(),
-            'secteur' => fake()->randomElement([
-                'Informatique',
-                'Finance',
-                'Santé',
-                'Marketing',
-            ]),
             'description' => fake()->paragraph(),
             'logo' => fake()->imageUrl(),
         ];

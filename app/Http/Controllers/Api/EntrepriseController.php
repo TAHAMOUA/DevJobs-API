@@ -3,47 +3,75 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreEntrepriseRequest;
+use App\Http\Requests\UpdateEntrepriseRequest;
+use App\Http\Resources\EntrepriseResource;
+use App\Models\Entreprise;
 use Illuminate\Http\Request;
 
 class EntrepriseController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Afficher le profil de l'entreprise connectée
      */
-    public function index()
+    public function show(Request $request)
     {
-        //
+        $entreprise = $request->user()->entreprise;
+
+        if (!$entreprise) {
+            return response()->json([
+                'message' => 'Aucun profil entreprise trouvé.',
+                'entreprise' =>$entreprise,
+            ], 404);
+        }
+
+        return new EntrepriseResource($entreprise);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Créer un profil entreprise
      */
-    public function store(Request $request)
+    public function store(StoreEntrepriseRequest $request)
     {
-        //
+        $user = $request->user();
+
+        if ($user->entreprise) {
+            return response()->json([
+                'message' => 'Vous avez déjà un profil entreprise.'
+            ], 409);
+        }
+
+        $entreprise = Entreprise::create([
+            'nom' => $request->nom,
+            'description' => $request->description,
+            'logo' => $request->logo,
+            'user_id' => $user->id,
+        ]);
+
+        return response()->json([
+            'message' => 'Profil entreprise créé avec succès.',
+            'entreprise' => new EntrepriseResource($entreprise),
+        ], 201);
     }
 
     /**
-     * Display the specified resource.
+     * Modifier le profil entreprise
      */
-    public function show(string $id)
+    public function update(UpdateEntrepriseRequest $request)
     {
-        //
-    }
+        $entreprise = $request->user()->entreprise;
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if (!$entreprise) {
+            return response()->json([
+                'message' => 'Profil entreprise introuvable.'
+            ], 404);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $entreprise->update($request->validated());
+
+        return response()->json([
+            'message' => 'Profil entreprise mis à jour.',
+            'entreprise' => new EntrepriseResource($entreprise),
+        ]);
     }
 }
