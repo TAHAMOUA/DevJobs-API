@@ -22,11 +22,15 @@ public function index()
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(StoreCompetenceRequest $request)
+{
+    $competence = Competence::create($request->validated());
 
+    return response()->json([
+        'message' => 'Compétence créée avec succès.',
+        'competence' => new CompetenceResource($competence),
+    ], 201);
+}
     /**
      * Display the specified resource.
      */
