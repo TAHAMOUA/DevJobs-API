@@ -34,11 +34,10 @@ public function index()
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+   public function show(Competence $competence)
     {
-        //
+    return new CompetenceResource($competence);
     }
-
     /**
      * Update the specified resource in storage.
      */
