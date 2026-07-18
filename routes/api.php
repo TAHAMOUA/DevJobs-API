@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\OffreController;
 use App\Http\Controllers\Api\CompetenceController;
 use App\Http\Controllers\Api\OffreCompetenceController;
+use App\Http\Controllers\Api\CandidatureController;
 Route::get('/test', function () {
     return response()->json([
         'message' => 'API DevJobs works!'
