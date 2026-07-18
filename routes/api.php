@@ -46,7 +46,7 @@ Route::middleware(['auth:sanctum', 'entreprise'])->group(function () {
 
     Route::get('/offres/{id}', [OffreController::class, 'show']);
 
-    Route::put('/offres/{offre}', [OffreController::class, 'update']);
+    Route::put('/offres/{id}', [OffreController::class, 'update']);
 
     Route::delete('/offres/{offre}', [OffreController::class, 'destroy']);
 

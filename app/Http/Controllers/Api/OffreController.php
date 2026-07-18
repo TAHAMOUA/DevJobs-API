@@ -78,25 +78,34 @@ public function show(Request $request, int $id)
 
     return new OffreResource($offre);
 }
-    /**
-     * Modifier une offre
-     */
-    public function update(UpdateOffreRequest $request, Offre $offre)
-    {
-        if ($offre->entreprise_id !== $request->user()->entreprise->id) {
-            return response()->json([
-                'message' => 'Accès refusé.'
-            ], 403);
-        }
+   /**
+ * Modifier une offre
+ */
+public function update(UpdateOffreRequest $request, int $id)
+{
+    $entreprise = $request->user()->entreprise;
 
-        $offre->update($request->validated());
-
+    if (!$entreprise) {
         return response()->json([
-            'message' => 'Offre mise à jour avec succès.',
-            'offre' => new OffreResource($offre),
-        ]);
+            'message' => 'Profil entreprise introuvable.'
+        ], 404);
     }
 
+    $offre = $entreprise->offres()->find($id);
+
+    if (!$offre) {
+        return response()->json([
+            'message' => 'Offre introuvable.'
+        ], 404);
+    }
+
+    $offre->update($request->validated());
+
+    return response()->json([
+        'message' => 'Offre mise à jour avec succès.',
+        'offre' => new OffreResource($offre),
+    ]);
+}
     /**
      * Supprimer une offre
      */
