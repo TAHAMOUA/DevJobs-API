@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\OffreController;
 use App\Http\Controllers\Api\CompetenceController;
-
+use App\Http\Controllers\Api\OffreCompetenceController;
 Route::get('/test', function () {
     return response()->json([
         'message' => 'API DevJobs works!'
@@ -50,11 +50,13 @@ Route::middleware(['auth:sanctum', 'entreprise'])->group(function () {
     Route::put('/offres/{id}', [OffreController::class, 'update']);
 
     Route::delete('/offres/{id}', [OffreController::class, 'destroy']);
-
-});
+    Route::post('/offres/{offre}/competences',[OffreCompetenceController::class, 'sync']);
+    Route::get('/offres/{offre}/competences', [OffreCompetenceController::class, 'index']);
+    });
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 
     Route::apiResource('competences', CompetenceController::class);
 
 });
+
