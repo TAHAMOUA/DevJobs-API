@@ -60,4 +60,9 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::apiResource('competences', CompetenceController::class);
 
 });
+Route::middleware(['auth:sanctum', 'candidat'])->group(function () {
+
+    Route::post('/candidatures', [CandidatureController::class, 'store']);
+
+});
 
