@@ -12,6 +12,16 @@ use Illuminate\Http\Request;
 class EntrepriseController extends Controller
 {
     /**
+ * Afficher toutes les entreprises
+ */
+public function index()
+{
+    $entreprises = Entreprise::latest()->get();
+
+    return EntrepriseResource::collection($entreprises);
+}
+
+    /**
      * Afficher le profil de l'entreprise connectée
      */
     public function show(Request $request)
@@ -74,4 +84,24 @@ class EntrepriseController extends Controller
             'entreprise' => new EntrepriseResource($entreprise),
         ]);
     }
+    /**
+ * Supprimer le profil entreprise
+ */
+public function destroy(Request $request)
+{
+    $entreprise = $request->user()->entreprise;
+
+    if (!$entreprise) {
+        return response()->json([
+            'message' => 'Profil entreprise introuvable.'
+        ], 404);
+    }
+
+    $entreprise->delete();
+
+    return response()->json([
+        'message' => 'Profil entreprise supprimé avec succès.'
+    ], 200);
+}
+
 }

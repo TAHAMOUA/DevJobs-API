@@ -28,6 +28,13 @@ class UserSeeder extends Seeder
     'password' => bcrypt('password'),
     'role' => 'entreprise',
 ]);
+ User::factory()->create([
+    'prenom' => 'instagram',
+    'nom' => 'Company',
+    'email' => 'entreprise1@devjobs.com',
+    'password' => bcrypt('password'),
+    'role' => 'entreprise',
+ ]);
 
         // Candidats
        User::factory()->create([
@@ -36,6 +43,6 @@ class UserSeeder extends Seeder
     'email' => 'candidat@devjobs.com',
     'password' => bcrypt('password'),
     'role' => 'candidat',
-]);
+]); 
     }
 }
