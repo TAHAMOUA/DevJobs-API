@@ -55,20 +55,29 @@ class OffreController extends Controller
         ], 201);
     }
 
-    /**
-     * Afficher une offre
-     */
-    public function show(Request $request, Offre $offre)
-    {
-        if ($offre->entreprise_id !== $request->user()->entreprise->id) {
-            return response()->json([
-                'message' => 'Accès refusé.'
-            ], 403);
-        }
+   /**
+ * Afficher une offre de l'entreprise connectée
+ */
+public function show(Request $request, int $id)
+{
+    $entreprise = $request->user()->entreprise;
 
-        return new OffreResource($offre);
+    if (!$entreprise) {
+        return response()->json([
+            'message' => 'Profil entreprise introuvable.'
+        ], 404);
     }
 
+    $offre = $entreprise->offres()->find($id);
+
+    if (!$offre) {
+        return response()->json([
+            'message' => 'Offre introuvable.'
+        ], 404);
+    }
+
+    return new OffreResource($offre);
+}
     /**
      * Modifier une offre
      */

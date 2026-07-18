@@ -44,7 +44,7 @@ Route::middleware(['auth:sanctum', 'entreprise'])->group(function () {
 
     Route::post('/offres', [OffreController::class, 'store']);
 
-    Route::get('/offres/{offre}', [OffreController::class, 'show']);
+    Route::get('/offres/{id}', [OffreController::class, 'show']);
 
     Route::put('/offres/{offre}', [OffreController::class, 'update']);
 
