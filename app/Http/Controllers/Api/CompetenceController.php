@@ -41,16 +41,24 @@ public function index()
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+   public function update(UpdateCompetenceRequest $request, Competence $competence)
+{
+    $competence->update($request->validated());
 
+    return response()->json([
+        'message' => 'Compétence mise à jour avec succès.',
+        'competence' => new CompetenceResource($competence),
+    ]);
+}
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
+  public function destroy(Competence $competence)
+{
+    $competence->delete();
+
+    return response()->json([
+        'message' => 'Compétence supprimée avec succès.'
+    ], 200);
+}
 }
