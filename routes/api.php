@@ -3,6 +3,7 @@ use App\Http\Controllers\Api\EntrepriseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\OffreController;
+use App\Http\Controllers\Api\CompetenceController;
 
 Route::get('/test', function () {
     return response()->json([
@@ -29,11 +30,11 @@ Route::middleware(['auth:sanctum', 'admin'])->get('/admin-test', function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-
     Route::post('/entreprises', [EntrepriseController::class, 'store']);
-
-    Route::get('/entreprises/{me}', [EntrepriseController::class, 'show']);
+    
     Route::get('/entreprises', [EntrepriseController::class, 'index']);
+    Route::get('/entreprises/me', [EntrepriseController::class, 'show']);
+    
     Route::put('/entreprises/{me}', [EntrepriseController::class, 'update']);
     Route::delete('/entreprises/me', [EntrepriseController::class, 'destroy']);
 });
@@ -48,6 +49,12 @@ Route::middleware(['auth:sanctum', 'entreprise'])->group(function () {
 
     Route::put('/offres/{id}', [OffreController::class, 'update']);
 
-    Route::delete('/offres/{offre}', [OffreController::class, 'destroy']);
+    Route::delete('/offres/{id}', [OffreController::class, 'destroy']);
+
+});
+
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+
+    Route::apiResource('competences', CompetenceController::class);
 
 });

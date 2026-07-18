@@ -107,20 +107,30 @@ public function update(UpdateOffreRequest $request, int $id)
     ]);
 }
     /**
-     * Supprimer une offre
-     */
-    public function destroy(Request $request, Offre $offre)
-    {
-        if ($offre->entreprise_id !== $request->user()->entreprise->id) {
-            return response()->json([
-                'message' => 'Accès refusé.'
-            ], 403);
-        }
+ * Supprimer une offre
+ */
+public function destroy(Request $request, int $id)
+{
+    $entreprise = $request->user()->entreprise;
 
-        $offre->delete();
-
+    if (!$entreprise) {
         return response()->json([
-            'message' => 'Offre supprimée avec succès.'
-        ]);
+            'message' => 'Profil entreprise introuvable.'
+        ], 404);
     }
+
+    $offre = $entreprise->offres()->find($id);
+
+    if (!$offre) {
+        return response()->json([
+            'message' => 'Offre introuvable.'
+        ], 404);
+    }
+
+    $offre->delete();
+
+    return response()->json([
+        'message' => 'Offre supprimée avec succès.'
+    ], 200);
+}
 }
