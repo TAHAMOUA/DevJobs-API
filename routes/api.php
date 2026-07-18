@@ -52,6 +52,7 @@ Route::middleware(['auth:sanctum', 'entreprise'])->group(function () {
     Route::delete('/offres/{id}', [OffreController::class, 'destroy']);
     Route::post('/offres/{offre}/competences',[OffreCompetenceController::class, 'sync']);
     Route::get('/offres/{offre}/competences', [OffreCompetenceController::class, 'index']);
+    Route::delete('/offres/{offre}/competences/{competence}',[OffreCompetenceController::class, 'destroy']);
     });
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {

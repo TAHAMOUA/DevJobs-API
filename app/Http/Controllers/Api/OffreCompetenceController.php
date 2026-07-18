@@ -62,4 +62,37 @@ public function index(Request $request, int $offre)
 
     return CompetenceResource::collection($offre->competences);
 }
+/**
+ * Supprimer une compétence d'une offre
+ */
+public function destroy(Request $request, int $offre, int $competence)
+{
+    $entreprise = $request->user()->entreprise;
+
+    if (!$entreprise) {
+        return response()->json([
+            'message' => 'Profil entreprise introuvable.'
+        ], 404);
+    }
+
+    $offre = $entreprise->offres()->find($offre);
+
+    if (!$offre) {
+        return response()->json([
+            'message' => 'Offre introuvable.'
+        ], 404);
+    }
+
+    if (!$offre->competences()->where('competence_id', $competence)->exists()) {
+        return response()->json([
+            'message' => 'Compétence non associée à cette offre.'
+        ], 404);
+    }
+
+    $offre->competences()->detach($competence);
+
+    return response()->json([
+        'message' => 'Compétence retirée de l\'offre avec succès.'
+    ]);
+}
 }
